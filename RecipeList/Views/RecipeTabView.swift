@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeTabView: View {
     
-    @ObservedObject var model = RecipeModel()
+    @EnvironmentObject var model:RecipeModel
     
     var body: some View {
         VStack {
@@ -22,7 +22,7 @@ struct RecipeTabView: View {
                 Spacer()
             }
             TabView {
-                Text("Featured View").tabItem {
+                RecipeFeaturedView().tabItem {
                     VStack {
                         Image(systemName: "star.fill")
                         Text("Featured")
@@ -42,6 +42,6 @@ struct RecipeTabView: View {
 
 struct RecipeTabView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeTabView()
+        RecipeTabView().environmentObject(RecipeModel())
     }
 }
