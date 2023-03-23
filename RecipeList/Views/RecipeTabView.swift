@@ -10,17 +10,12 @@ import SwiftUI
 struct RecipeTabView: View {
     
     @EnvironmentObject var model:RecipeModel
+   
+    @State var isAddRecipePresented = false
     
     var body: some View {
-        VStack {
-            HStack{
-                Spacer()
-                Button(action: { print("Hello") } ) {
-                   Image(systemName: "plus.circle.fill")
-                    Text("Add Recipe")
-                }
-                Spacer()
-            }
+        ZStack(alignment: .topTrailing) {
+            
             TabView {
                 RecipeFeaturedView().tabItem {
                     VStack {
@@ -28,17 +23,46 @@ struct RecipeTabView: View {
                         Text("Featured")
                     }
                 }
+                
                 RecipeListView()
                     .tabItem {
                         VStack {
                             Image(systemName: "list.bullet")
                             Text("List")
                         }
-                    }.badge(model.recipes.count)
+                    }
+                    .badge(model.recipes.count)
+            }
+        
+            
+            // NavigationView with a single tab for adding a recipe
+            NavigationView {
+                RecipeAddView()
+            }
+    
+            .cornerRadius(16)
+            .shadow(radius: 8)
+            .padding()
+            .offset(y: isAddRecipePresented ? 0 : UIScreen.main.bounds.height)
+            .animation(.easeInOut)
+            
+            // Plus button to present the RecipeAddView
+            Button(action: {
+                isAddRecipePresented = true
+            }, label: {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 48, height: 48)
+                    .foregroundColor(.green)
+            })
+            .padding()
+            .sheet(isPresented: $isAddRecipePresented) {
+                RecipeAddView(isPresented: $isAddRecipePresented)
             }
         }
     }
 }
+
 
 struct RecipeTabView_Previews: PreviewProvider {
     static var previews: some View {

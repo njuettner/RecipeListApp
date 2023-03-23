@@ -14,4 +14,8 @@ class RecipeModel: ObservableObject {
     init() {
         self.recipes = DataService.getLocalData()
     }
+    
+    func addRecipe(recipe:Recipe) {
+        recipes.append(recipe)
+    }
 }
