@@ -26,9 +26,7 @@ struct RecipeListView: View {
                         
                         ForEach(model.recipes) {
                             r in
-                            
                             NavigationLink(destination: RecipeDetailView(recipe: r),
-                                           
                                            label: {
                                 
                                 HStack(spacing: 20.0) {
